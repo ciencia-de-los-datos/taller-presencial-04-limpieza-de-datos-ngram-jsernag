@@ -13,6 +13,21 @@ def load_data(input_file):
     return df
 
 
+"""Taller evaluable presencial"""
+
+import pandas as pd
+
+
+def load_data(input_file):
+    """Lea el archivo usando pandas y devuelva un DataFrame"""
+
+    #
+    # Esta parte es igual al taller anterior
+    #
+    df = pd.read_csv(input_file)
+    return df
+
+
 def create_key(df, n):
     """Cree una nueva columna en el DataFrame que contenga el key de la columna 'text'"""
 
@@ -30,16 +45,16 @@ def create_key(df, n):
     # Esta es la parte especifica del algoritmo de n-gram:
     #
     # - Una el texto sin espacios en blanco
-
+    df["key"] = df["key"].str.join("")
     #
     # - Convierta el texto a una lista de n-gramas
-
+    df["key"] = df["key"].map(lambda x: [x[t : t + n - 1] for t in range(len(x))])
     #
     # - Ordene la lista de n-gramas y remueve duplicados
-
+    df["key"] = df["key"].apply(lambda x: sorted(set(x)))
     #
     # - Convierta la lista de ngramas a una cadena
-
+    df["key"] = df["key"].str.join("")
     ## ------------------------------------------------------
 
     return df
